@@ -13,4 +13,5 @@ class OrderController extends Controller
         $orders=Order::where('user_id',auth()->user()->id)->with('product')->with('destination')->get();
         return Inertia::render('Order/MyOrders',compact('orders'));
     }
+   
 }

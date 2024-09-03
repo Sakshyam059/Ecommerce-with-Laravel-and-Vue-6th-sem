@@ -3,15 +3,14 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Banner;
 use App\Models\Category;
 use App\Models\Order;
 use App\Models\Product;
-use App\Models\Sale;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
-use PhpParser\Node\Stmt\Return_;
 
 class AdminController extends Controller
 {
@@ -27,7 +26,7 @@ class AdminController extends Controller
             return Inertia::render('Dashboard',compact('product','totalorders','deliveries','revenue'));
     }
     public function myProduct(){
-        $products=Product::with('category')->with('sale')->get();
+        $products=Product::with('category')->get();
         return Inertia::render('Seller/Product/MyProducts',['products'=>$products]);
     }
 
@@ -88,10 +87,12 @@ class AdminController extends Controller
         $product->update($data);
         return Redirect::route('myproducts');
     }
-
+    
     public function deleteProduct($id){
         $product=Product::find($id);
+        File::delete(public_path('/images/product/'.$product->id));
         $product->delete();
+        return Redirect::route('myproducts');
     }
 
     public function categories(){
@@ -128,12 +129,18 @@ class AdminController extends Controller
         $category->delete();
     }
 
-    public function salesAdmin(){
-        $sales=Sale::with('product')->get();
-        return Inertia::render('Seller/Sales/MySales',compact('sales'));
+    public function bannersAdmin(){
+        $banners=Banner::with('category')->get();
+        return Inertia::render('Banner/Index',compact('banners'));
     }
     public function orders(){
+        $orders=Order::where('payment_status','completed')->with(['product','user','destination'])->get();
+        return Inertia::render('Seller/Order/Orders',compact('orders'));
+    }
+    public function updateOrder(Order $order){
         $orders=Order::where('payment_status','completed')->with('product')->with('destination')->get();
+        $data['delivery_status']=1;
+        $order->update($data);
         return Inertia::render('Seller/Order/Orders',compact('orders'));
     }
 }

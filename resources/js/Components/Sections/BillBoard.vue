@@ -16,7 +16,7 @@
       Swiper,
       SwiperSlide,
     },props:{
-        'sales':Object,
+        'banners':Object,
     },
     setup() {
      
@@ -28,7 +28,7 @@
 </script>
 <template>
  
-    <div class="my-4 overflow-hidden rounded shadow-sm  border-gray-400/30 shadow-black/40">
+    <div class="my-4 overflow-hidden rounded shadow-sm border-gray-400/30 shadow-black/40">
         <swiper
         :modules="modules"
     :slides-per-view="1"
@@ -39,8 +39,8 @@
         "disableOnInteraction": false
     }'
   >
-    <swiper-slide v-if="sales" v-for="sale in sales" :key="sale.id">
-        <img :src="'/images/sale/'+sale.image" class="h-[400px] object-center w-full hover:scale-125 transition ease-in duration-500" />
+    <swiper-slide v-if="banners" v-for="banner in banners" :key="banner.id">
+        <img :src="'/images/banner/'+banner.image" class="h-[400px] object-center w-full hover:scale-125 transition ease-in duration-500" />
     </swiper-slide>
    
   </swiper>

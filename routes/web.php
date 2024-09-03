@@ -4,6 +4,7 @@ use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Homepage\HomeController;
 use App\Http\Controllers\Order\OrderController;
 use App\Http\Controllers\Payment\PaymentController;
+use App\Http\Controllers\Product\BannerController;
 use App\Http\Controllers\Product\CartController;
 use App\Http\Controllers\Product\CategoryController;
 use App\Http\Controllers\Product\ProductController;
@@ -24,8 +25,10 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', [HomeController::class,'index'])->name('welcome');
+Route::get('/test/success', [HomeController::class,'success'])->name('success');
 Route::get('/home', [HomeController::class,'home'])->name('home');
 Route::get('/about', [HomeController::class,'about'])->name('about');
+
 
 
 Route::middleware('auth')->group(function () {
@@ -53,7 +56,6 @@ Route::get('/product/about/{id}',[ProductController::class,'aboutProduct'])->nam
 Route::get('/product/search={keyword}',[ProductController::class,'searchResult'])->name('search.result');
 
 Route::get('/category/{name}',[CategoryController::class,'category'])->name('category.product');
-Route::get('/sales',[SalesController::class,'index'])->name('sales.index');
 
 
 Route::prefix('admin')->middleware('admin')->group(function () {
@@ -73,12 +75,11 @@ Route::prefix('admin')->middleware('admin')->group(function () {
     
     Route::delete('/product/{id}/delete',[AdminController::class,'deleteProduct'])->name('product.delete');
     
-    Route::get('/sales',[AdminController::class,'salesAdmin'])->name('sales.admin');
-    Route::get('/sales/manage',[SalesController::class,'viewSaleForm'])->name('sales.form');
-    Route::post('/sales/add',[SalesController::class,'addSales'])->name('sales.add');
-    Route::delete('/sales/{id}/delete',[SalesController::class,'deleteSale'])->name('sales.delete');
+    Route::get('/banners',[AdminController::class,'bannersAdmin'])->name('banners.admin');
+    Route::resource('/banner',BannerController::class);
     
     Route::get('/orders', [AdminController::class,'orders'])->name('orders.admin');
+    Route::post('/order/{order}/delivered', [AdminController::class,'updateOrder'])->name('update-order.admin');
 
     
    

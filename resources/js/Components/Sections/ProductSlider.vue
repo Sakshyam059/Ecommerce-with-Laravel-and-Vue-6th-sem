@@ -46,7 +46,7 @@
   </h2>
   <div class="relative flex items-center">
       <swiper  
-    :slides-per-view="5"
+    :slides-per-view="products.length>4?4:products.length"
     :space-between="20"
     :pagination="{ clickable: true }"
     @swiper="onSwiper"

@@ -32,7 +32,9 @@ class ProductController extends Controller
         return Inertia::render("Product/Search/SearchResult",compact('products','keyword'));
     }
     public function index(){
-        return Inertia::render('Product/ViewProducts');
+        $categories=Category::all();
+        $products=Product::all();
+        return Inertia::render('Product/Index',compact('categories','products'));
     }
 
     public function addToCart(){
@@ -45,11 +47,12 @@ class ProductController extends Controller
     // 
     public function aboutProduct($id){
         $product=Product::where('id',$id)->with('category')->first();
-        $reviews=Review::where('product_id',$id)->where('user_id','!=',auth()->user()->id)->with('user')->get();
         if(auth()->user()){
+            $reviews=Review::where('product_id',$id)->where('user_id','!=',auth()->user()->id)->with('user')->get();
             $myreview=Review::where('user_id',auth()->user()->id)->where('product_id',$id)->with('user')->first();
             
         }else{
+            $reviews=[];       
             $myreview=[];       
         }
         return Inertia::render('Product/AboutProduct',compact('product','myreview','reviews'));

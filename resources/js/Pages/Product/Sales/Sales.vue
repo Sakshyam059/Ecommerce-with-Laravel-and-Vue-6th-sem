@@ -1,4 +1,4 @@
-<script setup>
+<!-- <script setup>
 import ContentLayout from '@/Layouts/ContentLayout.vue';
 import Table from '@/Components/Table.vue';
 import { Link, router } from '@inertiajs/vue3';
@@ -14,16 +14,16 @@ const destroy=(id)=>{
 <template>
 <ContentLayout>
     <section class="-mt-10">      
-            <h2 class="w-fit text-2xl font-semibold  pb-3 text-gray-900">Top Sales</h2>
+            <h2 class="pb-3 text-2xl font-semibold text-gray-900 w-fit">Top Sales</h2>
 
-        <section class="flex gap-4 flex-wrap">
+        <section class="flex flex-wrap gap-4">
             <div v-if="sales.length>0" v-for="sale in sales">
                 <Product :product="sale.product" />           
             </div>
-            <div v-else class="w-full min-h-80 text-gray-400 font-medium grid place-items-center  text-3xl">
+            <div v-else class="grid w-full text-3xl font-medium text-gray-400 min-h-80 place-items-center">
                 No any products sale listed
             </div>
         </section>
 </section>
 </ContentLayout>
-</template>
+</template> -->

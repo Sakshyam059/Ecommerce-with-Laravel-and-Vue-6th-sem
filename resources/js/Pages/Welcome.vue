@@ -8,39 +8,35 @@ const props=defineProps({
     cart:Object,
     products:Object,
     categories:Object,
-    sales:Object,
-    othersales:Object,
+    banners:Object,
+    otherbanners:Object,
 })
 </script>
 <template>
     <ContentLayout>
         <template #category>
-            <div  class="w-full fixed left-0 right-0  border-b border-gray-800/15">
+            <div  class="fixed left-0 right-0 w-full border-b border-gray-800/15">
                 <CategoryBar :categories="categories"/>
             </div>
         </template>
-        <section v-if="sales" class="mb-6">
-            <BillBoard :products="products" :sales="sales"/>
+        <section v-if="banners" class="mb-6">
+            <BillBoard  :banners="banners"/>
         </section>
         <section >
-            <ProductSlider :products="products" heading="Trending Sales" />
+            <ProductSlider :products="products" heading="Trendings" />
         </section>
-        <section class="my-8  grid grid-cols-2  gap-10">
-                    <div class="relative bg-gray-800 flex items-center border border-gray-300 rounded" v-for="sale in othersales">
+        <!-- <section class="grid grid-cols-2 gap-10 my-8">
+                    <div class="relative flex items-center bg-gray-800 border border-gray-300 rounded" v-for="sale in othersales">
                         <aside className="w-full overflow-hidden  ">
-                            <img :src="'/images/sale/'+sale.image" class="opacity-75 object-center w-full h-52 hover:scale-125 transition ease-in duration-500" />
+                            <img :src="'/images/sale/'+sale.image" class="object-center w-full transition duration-500 ease-in opacity-75 h-52 hover:scale-125" />
                         </aside>
-                        <div class="absolute  text-white left-8 font-bold">
-                            <small class="text-xl">Save upto {{sale.product.discount}}% off</small>
-                            <h3 class="text-4xl font-extrabold py-3">{{ sale.product.name }}</h3>
-                            <button class="px-8 py-2 my-1 bg-gray-800 text-white rounded-md">Shop now</button>
-                        </div>
+
                     </div>
                     
                     
                 </section>
         <section>
             <ProductSlider heading="Top Buys" :products="products"/>
-        </section>
+        </section> -->
     </ContentLayout>
-</template>../Components/Sections/CategoryBar.vue
+</template>

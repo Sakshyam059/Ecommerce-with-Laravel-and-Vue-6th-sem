@@ -54,7 +54,7 @@ class PaymentController extends Controller
         ]);
         
         $response = Http::withHeaders([
-                'Authorization' => 'key 044b7ae87946412c923ddaa2923c84fd',
+                'Authorization' => 'key 82936285c62c4251a08f8d9702b3f3be',
                 'Content-Type'=> 'application/json',
         ])->post($khalti."epayment/initiate/", $data);
 
@@ -80,7 +80,7 @@ class PaymentController extends Controller
         ]);
 
         $response = Http::withHeaders([
-            'Authorization' => 'key 044b7ae87946412c923ddaa2923c84fd',
+            'Authorization' => 'key 82936285c62c4251a08f8d9702b3f3be',
             'Content-Type'=> 'application/json',
         ])->post($khalti."epayment/lookup/", $data);
         if($response['status']=="Completed"){
@@ -109,11 +109,11 @@ class PaymentController extends Controller
                 $product=Product::find($data['product_id']);
                 $product->stock=$product['stock']-1;
                 $product->update();
-                
                 $request->session()->forget('orders');
             }
             
-            return Inertia::render('Payment/Success',compact('amount'));
+            $ref_id=$response['pidx'];
+            return Inertia::render('Payment/Success',compact('amount','ref_id'));
         }
         else{
             return Redirect::route('welcome');
@@ -121,7 +121,6 @@ class PaymentController extends Controller
     }
     public function success(){
         $order=Order::where("payment_status","failed")->first();
-        dd($order);
         return Inertia::render('Payment/Success');
     }
 }
